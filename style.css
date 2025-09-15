@@ -4,27 +4,63 @@
 }
 
 /* Custom filter box styling */
+/* Enhanced and responsive filter box styling */
 .filter-box {
-  background: white;
-  padding: 10px;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.4;
+  background: rgba(255,255,255,0.95);
+  padding: 16px 18px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  min-width: 220px;
+  max-width: 90vw;
+  margin-top: 12px;
+  margin-left: 8px;
+  transition: box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 .filter-box label {
   display: flex;
   align-items: center;
-  margin: 4px 0;
+  gap: 8px;
+  margin: 0;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
   cursor: pointer;
+  font-weight: 500;
+}
+.filter-box label:last-child {
+  border-bottom: none;
 }
 .color-dot {
   display: inline-block;
-  width: 12px;
-  height: 12px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
-  margin-right: 6px;
+  margin-right: 0;
+  border: 2px solid #ddd;
+}
+@media (max-width: 600px) {
+  .filter-box {
+    padding: 16px 12px;
+    font-size: 18px;
+    min-width: 80vw;
+    max-width: 95vw;
+    border-radius: 14px;
+    gap: 10px;
+  }
+  .color-dot {
+    width: 16px;
+    height: 16px;
+    border-width: 2px;
+  }
+  .filter-box label {
+    padding: 10px 0;
+    font-size: 17px;
+  }
 }
 #splash {
   position: fixed;
