@@ -75,9 +75,9 @@ function initMap() {
   // Colors for each type
   const colors = {
     CentralizedVendo: "blue",
-    Subscribers: "green",
+    Subscribers: "yellow",
     NapBox: "black",
-    Towers: "skyblue"
+    Towers: "green"
   };
 
   // Responsive marker size function
