@@ -55,7 +55,10 @@ function initMap() {
   // Example data
   const data = {
     CentralizedVendo: [
-      { lat: 10.006, lng: 122.967, name: "Vendo Bacolod" }
+      { lat: 10.006, lng: 122.967, name: "Vendo Bacolod" },
+        { lat: 9.8068533, lng: 122.4212351, name: "Vendo Canturay" }
+
+      
     ],
     Subscribers: [
       { lat: 9.307, lng: 123.308, name: "Subscriber Dumaguete" }
@@ -66,9 +69,8 @@ function initMap() {
     Towers: [
       { lat: 9.9, lng: 122.9, name: "Tower Negros Center" },
       // Test marker on a highway (Bacolod North Road, near Talisay City)
-      { lat: 10.6711, lng: 122.9636, name: "Highway Test Marker" },
+      { lat: 10.6711, lng: 122.9636, name: "Highway Test Marker" }
       // Gil Montilla, Sipalay City (near highway)
-      { lat: 9.7897, lng: 122.4047, name: "Gil Montilla, Sipalay City" }
     ]
   };
 
