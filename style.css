@@ -1,0 +1,46 @@
+#map {
+  height: 100vh;
+  width: 100%;
+}
+
+/* Custom filter box styling */
+.filter-box {
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+}
+.filter-box label {
+  display: flex;
+  align-items: center;
+  margin: 4px 0;
+  cursor: pointer;
+}
+.color-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+#splash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.8s ease;
+}
+#splash img {
+  max-width: 100%;
+  /* background: black; */
+  height: auto;
+}
