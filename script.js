@@ -7,34 +7,32 @@ window.addEventListener("load", () => {
       splash.style.display = "none";
       document.getElementById("map").style.display = "block";
       initMap();
-      // Add current location marker (red person icon) after map is initialized
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          const lat = position.coords.latitude;
-          const lng = position.coords.longitude;
-          // Create a custom red person icon using SVG
-          const personIcon = L.divIcon({
-            className: 'person-icon',
-            html: `<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="16" cy="10" r="6" fill="red" />
-              <rect x="10" y="18" width="12" height="8" rx="6" fill="red" />
-            </svg>`,
-            iconSize: [32, 32],
-            iconAnchor: [16, 32]
-          });
-          L.marker([lat, lng], { icon: personIcon })
-            .bindPopup('<b>Your Current Location</b>')
-            .addTo(window.leafletMap || window.map);
-          (window.leafletMap || window.map).setView([lat, lng], 12);
-        });
-      }
     }, 800); // wait for fade out
   }, 2000);
 });
 
 function initMap() {
-  // Expose map for global access (for geolocation marker)
-  window.leafletMap = map;
+  // Add current location marker (red person icon)
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      const lat = position.coords.latitude;
+      const lng = position.coords.longitude;
+      // Create a custom red person icon using SVG
+      const personIcon = L.divIcon({
+        className: 'person-icon',
+        html: `<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="10" r="6" fill="red" />
+          <rect x="10" y="18" width="12" height="8" rx="6" fill="red" />
+        </svg>`,
+        iconSize: [32, 32],
+        iconAnchor: [16, 32]
+      });
+      L.marker([lat, lng], { icon: personIcon })
+        .bindPopup('<b>Your Current Location</b>')
+        .addTo(map);
+      map.setView([lat, lng], 12);
+    });
+  }
   // Initialize map centered on Negros Island
   const map = L.map('map').setView([9.9, 123.0], 9);
 
