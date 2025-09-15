@@ -12,11 +12,14 @@ window.addEventListener("load", () => {
 });
 
 function initMap() {
+  let currentLocation = null;
+  let routeLine = null;
   // Add current location marker (red person icon)
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
       const lat = position.coords.latitude;
       const lng = position.coords.longitude;
+      currentLocation = [lat, lng];
       // Create a custom red person icon using SVG
       const personIcon = L.divIcon({
         className: 'person-icon',
@@ -27,10 +30,10 @@ function initMap() {
         iconSize: [32, 32],
         iconAnchor: [16, 32]
       });
-      L.marker([lat, lng], { icon: personIcon })
+      L.marker(currentLocation, { icon: personIcon })
         .bindPopup('<b>Your Current Location</b>')
         .addTo(map);
-      map.setView([lat, lng], 12);
+      map.setView(currentLocation, 12);
     });
   }
   // Initialize map centered on Negros Island
@@ -61,7 +64,11 @@ function initMap() {
       { lat: 10.5, lng: 123.4, name: "Nap Box North Negros" }
     ],
     Towers: [
-      { lat: 9.9, lng: 122.9, name: "Tower Negros Center" }
+      { lat: 9.9, lng: 122.9, name: "Tower Negros Center" },
+      // Test marker on a highway (Bacolod North Road, near Talisay City)
+      { lat: 10.6711, lng: 122.9636, name: "Highway Test Marker" },
+      // Gil Montilla, Sipalay City (near highway)
+      { lat: 9.7897, lng: 122.4047, name: "Gil Montilla, Sipalay City" }
     ]
   };
 
@@ -81,6 +88,21 @@ function initMap() {
 
   // Store markers for resizing
   const allMarkers = [];
+  // OSRM public routing (no API key required)
+  async function getRoute(start, end) {
+    const url = `https://router.project-osrm.org/route/v1/driving/${start[1]},${start[0]};${end[1]},${end[0]}?overview=full&geometries=geojson`;
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      if (data.routes && data.routes[0] && data.routes[0].geometry) {
+        return data.routes[0].geometry.coordinates.map(coord => [coord[1], coord[0]]);
+      }
+    } catch (e) {
+      console.error('Route fetch error:', e);
+    }
+    return null;
+  }
+
   for (let type in data) {
     data[type].forEach(item => {
       const marker = L.circleMarker([item.lat, item.lng], {
@@ -89,8 +111,30 @@ function initMap() {
         fillColor: colors[type],
         fillOpacity: 0.9
       })
-      .bindPopup(`<b>${item.name}</b>`)
       .addTo(layers[type]);
+      marker.on('click', async function() {
+        if (currentLocation) {
+          // Remove previous route if exists
+          if (routeLine) {
+            map.removeLayer(routeLine);
+          }
+          // Fetch route from ORS
+          marker.bindPopup(`<b>${item.name}</b><br><span style='color:orange;'>Tracing route...</span>`).openPopup();
+          const routeCoords = await getRoute(currentLocation, [item.lat, item.lng]);
+          if (routeCoords) {
+            routeLine = L.polyline(routeCoords, {
+              color: 'red',
+              weight: 5,
+              opacity: 0.9
+            }).addTo(map);
+            marker.bindPopup(`<b>${item.name}</b><br><span style='color:red;font-weight:bold;'>Trace Route from your location</span>`).openPopup();
+          } else {
+            marker.bindPopup(`<b>${item.name}</b><br><span style='color:red;'>Route not found</span>`).openPopup();
+          }
+        } else {
+          marker.bindPopup(`<b>${item.name}</b><br><span style='color:gray;'>Current location not found</span>`).openPopup();
+        }
+      });
       allMarkers.push(marker);
     });
     // Add all layers to map by default
