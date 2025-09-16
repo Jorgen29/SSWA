@@ -27,8 +27,8 @@ function initMap() {
           <circle cx="16" cy="10" r="6" fill="red" />
           <rect x="10" y="18" width="12" height="8" rx="6" fill="red" />
         </svg>`,
-        iconSize: [32, 32],
-        iconAnchor: [16, 32]
+        iconSize: [64, 64],
+        iconAnchor: [32, 64]
       });
       L.marker(currentLocation, { icon: personIcon })
         .bindPopup('<b>Your Current Location</b>')
