@@ -85,7 +85,7 @@ function initMap() {
   // Responsive marker size function
   function getMarkerRadius() {
     // Old radius was 6, let's use 7 for a slight increase
-    return 9;
+    return 20;
   }
 
   // Store markers for resizing
