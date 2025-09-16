@@ -37,8 +37,8 @@
 }
 .color-dot {
   display: inline-block;
-  width: 64px;
-  height: 64px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   margin-right: 0;
   border: 2px solid #ddd;
@@ -53,8 +53,8 @@
     gap: 10px;
   }
   .color-dot {
-    width: 16px;
-    height: 16px;
+    width: 32px;
+    height: 32px;
     border-width: 2px;
   }
   .filter-box label {
